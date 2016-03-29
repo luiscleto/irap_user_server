@@ -38,6 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_jinja',
+    'user_server',
+    'django_extensions',
+    'mongonaut',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -45,10 +48,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'irap_user_server.urls'
@@ -77,10 +78,16 @@ WSGI_APPLICATION = 'irap_user_server.wsgi.application'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+  'default': {
+      'ENGINE' : 'django_mongodb_engine',
+      'NAME' : 'irap_user_data',
+      # The following settings are not used with sqlite3:
+      'USER': '',
+      'PASSWORD': '',
+      'HOST': '',      # Empty for localhost through domain sockets
+                       # or '127.0.0.1' for localhost through TCP.
+      'PORT': '',      # Set to empty string for default.
+  }
 }
 
 
@@ -102,6 +109,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates')
+)
 
 TEMPLATE_LOADERS = (
     'django_jinja.loaders.AppLoader',
