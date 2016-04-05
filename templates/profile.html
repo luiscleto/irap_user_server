@@ -1,9 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Profile{% endblock %}
+{% block title %} {{ user.get_username }}'s Profile{% endblock %}
 
 {% block content %}
+    <p>Hello, {{ user.get_username }}!</p>
+    <p>One day, I might work on this page. <a href="{% url 'logout' %}">Logout</a>.</p>
 
-    <p>One day, I might work on this. <a href="{% url 'logout' %}">Logout</a>.</p>
+    <p>For now, <a href="{% url 'home' %}">go to home</a>.</p>
 
 {% endblock %}

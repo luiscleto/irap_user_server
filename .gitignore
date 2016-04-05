@@ -68,3 +68,6 @@ target/
 
 #directories to ignore
 .idea/
+
+#sensitive information
+irap_user_server/local_settings.py

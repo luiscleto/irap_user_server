@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} {{ user.get_username }}'s Experiments{% endblock %}
+
+{% block content %}
+
+    <h1>Work in Progress!</h1>
+
+    {% if user.is_authenticated %}
+        <p><a href="{% url 'experiments' %}">Experiments</a></p>
+        <p><a href="{% url 'logout' %}">Logout?</a></p>
+    {% else %}
+        <p><a href="{% url 'login' %}">Login?</a></p>
+        <p><a href="{% url 'register' %}">Register?</a></p>
+    {% endif %}
+
+{% endblock %}
