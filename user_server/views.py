@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse(u'Testing <a href="/login">login</a>.')
+    return render(request, 'index.html')
 
 
 def profile(request):

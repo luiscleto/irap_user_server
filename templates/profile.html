@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 
+{% block title %}Profile{% endblock %}
+
 {% block content %}
 
-<p>One day, I might work on this. <a href="/logout">Logout</a>.</p>
+    <p>One day, I might work on this. <a href="{% url 'logout' %}">Logout</a>.</p>
 
 {% endblock %}

@@ -1,17 +1,19 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     {% block head %}
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}{% endblock %} - My Webpage</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+        <title>{% block title %}{% endblock %} - iRap UI</title>
     {% endblock %}
 </head>
 <body>
-    <div id="content">{% block content %}{% endblock %}</div>
-    <div id="footer">
-        {% block footer %}
-        &copy; Copyright 2008 by <a href="http://domain.invalid/">you</a>.
-        {% endblock %}
-    </div>
+<div id="content">{% block content %}{% endblock %}</div>
+<div id="footer">
+    {% block footer %}
+        &copy; Copyright 2016 by <a href="https://github.com/luiscleto/">luiscleto</a>.
+    {% endblock %}
+</div>
 </body>
 </html>

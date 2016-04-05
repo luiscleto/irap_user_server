@@ -9,8 +9,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', views.index, name='home'),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
-    url(r'^password_reset/$', auth_views.password_reset, {'template_name': 'password_reset.html'}, name='password_reset'),
+    url('^', include('django.contrib.auth.urls')),
     url(r'^accounts/profile/$', views.profile, name='profile'),
 
 ]
