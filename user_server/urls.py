@@ -8,7 +8,8 @@ urlpatterns = [
     # url(r'^$', 'irap_user_server.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^$', views.index, name='home'),
+    url(r'^$', RedirectView.as_view(pattern_name='home')),
+    url(r'^home/$', views.index, name='home'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
     url('^', include('django.contrib.auth.urls')),
     url(r'^accounts/profile/$', views.profile, name='profile'),
