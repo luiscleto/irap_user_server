@@ -21,13 +21,15 @@
                 <div class="panel-body">
                     <form role="form" method="post" action=".">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label>Title</label>
-                            <input class="form-control" placeholder="Title (up to 60 characters)" name="title" type="text" autofocus>
+                        <div class="form-group {% if form.title.errors %}has-error{% endif %}">
+                            <label for="exp_title" class="control-label">Title</label>
+                            <input id="exp_title" class="form-control" placeholder="Title (up to 60 characters)" name="title" required type="text" autofocus>
+                            {% if form.title.errors %}<small style="color:#a94442">{{ form.title.errors }}</small>{% endif %}
                         </div>
-                        <div class="form-group">
-                            <label>Description</label>
-                            <textarea class="form-control" name="description" maxlength="1500" rows="3" placeholder="Description (up to 1500 characters)"></textarea>
+                        <div class="form-group {% if form.description.errors %}has-error{% endif %}">
+                            <label for="exp_desc" class="control-label">Description</label>
+                            <textarea id="exp_desc" class="form-control" name="description" required maxlength="1500" rows="3" placeholder="Description (up to 1500 characters)"></textarea>
+                            {% if form.description.errors %}<small style="color:#a94442">{{ form.description.errors }}</small>{% endif %}
                         </div>
                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Experiment"/>
                     </form>

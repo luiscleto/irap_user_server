@@ -29,7 +29,11 @@ class ExperimentForm(forms.Form):
     description = forms.CharField(max_length=1500, widget=forms.Textarea)
 
     def clean_title(self):
-        return self.cleaned_data['title']
+        try:
+            exp = Experiment.objects.get(title__iexact=self.cleaned_data['title'])
+        except Experiment.DoesNotExist:
+            return self.cleaned_data['title']
+        raise forms.ValidationError(_("There is already an experiment with that title. Please choose a new one."))
 
     def clean_description(self):
         return self.cleaned_data['description']

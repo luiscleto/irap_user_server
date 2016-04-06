@@ -50,14 +50,15 @@ def create_experiment(request):
     if request.method == 'POST':
         form = ExperimentForm(request.POST)
         if form.is_valid():
-            Experiment.objects.create(
+            exp = Experiment.objects.create(
                 author=request.user.get_username(),
                 title=form.cleaned_data['title'],
                 description=form.cleaned_data['description'],
             )
-            return HttpResponseRedirect('/experiments/list/')
+            return HttpResponseRedirect('/experiments/'+exp.title)
     else:
-        return render(request, 'experiments/create.html', )
+        form = ExperimentForm()
+    return render(request, 'experiments/create.html', {'form': form})
 
 
 def not_yet_done(request):

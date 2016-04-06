@@ -52,22 +52,25 @@
                 <div class="panel-body">
                     <form role="form" method="post" action=".">
                         {% csrf_token %}
-                        <div class="form-group input-group">
+                        <div class="form-group input-group {% if form.username.errors %}has-error{% endif %}">
                             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                            <input type="text" name="username" class="form-control" placeholder="Username">
+                            <input type="text" name="username" class="form-control" required placeholder="Username">
                         </div>
-                        <div class="form-group input-group">
+                        {% if form.username.errors %}<small style="color:#a94442">{{ form.username.errors }}</small>{% endif %}
+                        <div class="form-group input-group {% if form.email.errors %}has-error{% endif %}">
                             <span class="input-group-addon">@</span>
-                            <input type="text" name="email" class="form-control" placeholder="E-mail">
+                            <input type="text" name="email" class="form-control" required placeholder="E-mail">
                         </div>
-                        <div class="form-group input-group">
+                        {% if form.email.errors %}<small style="color:#a94442">{{ form.email.errors }}</small>{% endif %}
+                        <div class="form-group input-group {% if form.non_field_errors %}has-error{% endif %}">
                             <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                            <input type="password" name="password1" class="form-control" placeholder="Password">
+                            <input type="password" name="password1" class="form-control" required placeholder="Password">
                         </div>
-                        <div class="form-group input-group">
+                        <div class="form-group input-group {% if form.non_field_errors %}has-error{% endif %}">
                             <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                            <input type="password" name="password2" class="form-control" placeholder="Password confirmation">
+                            <input type="password" name="password2" class="form-control" required placeholder="Password confirmation">
                         </div>
+                        {% if form.errors %}<small style="color:#a94442">{{ form.non_field_errors }}</small>{% endif %}
                         <input type="submit" class="btn btn-lg btn-success btn-block" value="Register"/>
                     </form>
                     <div style="margin-top:5px">
