@@ -14,25 +14,23 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Work Panel
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    {% if user.is_authenticated %}
-                        <p><a href="{% url 'experiments' %}">Experiments</a></p>
-                        <p><a href="{% url 'logout' %}">Logout?</a></p>
-                    {% else %}
-                        <p><a href="{% url 'login' %}">Login?</a></p>
-                        <p><a href="{% url 'register' %}">Register?</a></p>
-                    {% endif %}
-                </div>
-                <!-- /.panel-body -->
+            <div class="jumbotron" style="padding-left: 10px">
+                <h1>Hello there!</h1>
+                <p>iRAP UI is a web interface designed to interact with the
+                    <a href="http://biorxiv.org/content/early/2014/06/06/005991" target="_blank">iRAP</a> pipeline.
+                    iRAP is a flexible computational pipeline for RNA-seq that integrates many existing tools for
+                    filtering and mapping reads, quantifying expression and testing for differential expression. It is
+                    aimed at a broad group of users with basic bioinformatics training and requires little experience
+                    with the command line but also provides more advanced users with the ability to customise the
+                    options used by their chosen tools. </p>
+                <p><a class="btn btn-primary btn-lg" role="button" href="https://nunofonseca.github.io/irap/"
+                      target="_blank">Learn more</a>
+                </p>
             </div>
-            <!-- /.panel -->
         </div>
+        <!-- /.col-lg-12 -->
     </div>
+    <!-- /.row -->
     <!-- /.row -->
 
 {% endblock %}

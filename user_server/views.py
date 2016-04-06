@@ -15,6 +15,7 @@ def index(request):
     return render(request, 'index.html')
 
 
+@login_required
 def profile(request):
     return render(request, 'profile.html')
 
@@ -28,7 +29,7 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            return HttpResponseRedirect('/register/success/')
+            return HttpResponseRedirect('/accounts/profile/')
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
@@ -36,7 +37,14 @@ def register(request):
     return render_to_response('registration/register.html', variables, )
 
 
-@login_required
 def experiments_index(request):
-    return render_to_response('experiments/list.html', )
+    return render(request, 'experiments/list.html', )
+
+
+def user_experiments(request, username):
+    return render(request, 'experiments/list_by_user.html', {'username': username})
+
+
+def not_yet_done(request):
+    return render(request, 'todo.html', )
 
