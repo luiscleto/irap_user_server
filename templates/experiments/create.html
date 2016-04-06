@@ -12,17 +12,28 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
-            <div class="panel panel-primary">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    Nothing to see here.
+                    Experiment Information
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <p>Hello, {{ user.get_username }}!</p>
-                    <p>One day, I might work on this page.</p>
-
-                    <p>For now, <a href="{% url 'home' %}">go to home</a>.</p>
+                    <form role="form" method="post" action=".">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input class="form-control" placeholder="Title (up to 60 characters)" name="title" type="text" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" name="description" maxlength="1500" rows="3" placeholder="Description (up to 1500 characters)"></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Experiment"/>
+                    </form>
+                    <div style="margin-top:5px">
+                        <a class="btn btn-lg btn-danger btn-block" href="{% url 'home' %}">Cancel</a>
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>

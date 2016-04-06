@@ -47,7 +47,17 @@ def user_experiments(request, username):
 
 @login_required
 def create_experiment(request):
-    return render(request, 'experiments/create.html', )
+    if request.method == 'POST':
+        form = ExperimentForm(request.POST)
+        if form.is_valid():
+            Experiment.objects.create(
+                author=request.user.get_username(),
+                title=form.cleaned_data['title'],
+                description=form.cleaned_data['description'],
+            )
+            return HttpResponseRedirect('/experiments/list/')
+    else:
+        return render(request, 'experiments/create.html', )
 
 
 def not_yet_done(request):

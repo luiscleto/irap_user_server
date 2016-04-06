@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from user_server.models import *
 
 
 class RegistrationForm(forms.Form):
@@ -21,3 +22,14 @@ class RegistrationForm(forms.Form):
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("The two password fields did not match."))
         return self.cleaned_data
+
+
+class ExperimentForm(forms.Form):
+    title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=60)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only up to 60 letters, numbers and underscores.") })
+    description = forms.CharField(max_length=1500, widget=forms.Textarea)
+
+    def clean_title(self):
+        return self.cleaned_data['title']
+
+    def clean_description(self):
+        return self.cleaned_data['description']
