@@ -149,10 +149,10 @@
                     <ul class="nav nav-second-level">
                         {% if user.is_authenticated %}
                             <li>
-                                <a href="{% url 'notdone' %}">New Experiment</a>
+                                <a href="{% url 'new_experiment' %}">New Experiment</a>
                             </li>
                             <li>
-                                <a href="{% url 'notdone' %}">My Experiments</a>
+                                <a href="{% url 'user_experiments' user.get_username %}">My Experiments</a>
                             </li>
                         {% endif %}
                         <li>

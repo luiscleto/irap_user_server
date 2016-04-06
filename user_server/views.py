@@ -45,6 +45,10 @@ def user_experiments(request, username):
     return render(request, 'experiments/list_by_user.html', {'username': username})
 
 
+@login_required
+def create_experiment(request):
+    return render(request, 'experiments/create.html', )
+
+
 def not_yet_done(request):
     return render(request, 'todo.html', )
-

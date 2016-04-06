@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^register/$',  views.register, name='register'),
 
     url(r'^experiments/$', views.experiments_index, name='experiments'),
+    url(r'^experiments/create/$', views.create_experiment, name='new_experiment'),
     url(r'^(?P<username>\w+)/experiments/$', views.user_experiments, name='user_experiments'),
 
     url(r'^notdone/$', views.not_yet_done, name='notdone'),
