@@ -19,4 +19,5 @@ class Experiment(models.Model):
         ],)
     description = models.CharField(max_length=1500, blank=False)
     status = models.FloatField(default=0)
+    date_created = models.DateTimeField(default=datetime.now)
     date_modified = models.DateTimeField(default=datetime.now)

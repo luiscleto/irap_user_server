@@ -14,7 +14,9 @@ urlpatterns = [
     url(r'^home/$', views.index, name='home'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}, name='logout'),
     url('^', include('django.contrib.auth.urls')),
-    url(r'^accounts/profile/$', views.profile, name='profile'),
+
+    url(r'^accounts/profile/(?P<username>\w+)$', views.profile, name='profile'),
+    url(r'^accounts/profile/$', views.redirect_to_user_profile),
     url(r'^accounts/login/$',  RedirectView.as_view(pattern_name='login')),
     url(r'^register/$',  views.register, name='register'),
 

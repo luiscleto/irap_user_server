@@ -102,7 +102,7 @@
             </a>
             <ul class="dropdown-menu dropdown-user">
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'profile' %}"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="{% url 'profile' user.get_username %}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
                     <li><a href="{% url 'notdone' %}"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
@@ -141,7 +141,7 @@
                 </li>
                 {% if user.is_authenticated %}
                     <li>
-                        <a href="{% url 'profile' %}"><i class="fa fa-user fa-fw"></i> Profile</a>
+                        <a href="{% url 'profile' user.get_username %}"><i class="fa fa-user fa-fw"></i> Profile</a>
                     </li>
                 {% endif %}
                 <li>

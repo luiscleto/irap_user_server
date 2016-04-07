@@ -27,12 +27,12 @@
                                         <strong>{{ e.title }}</strong>
                                         <span class="pull-right text-muted">{{ e.status | floatformat }}% Complete</span>
                                     </p>
-                                    <div class="progress progress-striped active">
+                                    <div class="progress {% if  e.status < 100.0 %}progress-striped active{% endif %}">
                                         <div class="progress-bar {% if  e.status >= 100.0 %}progress-bar-success{% else %}progress-bar-primary{% endif %}"
                                              role="progressbar"
                                              aria-valuenow="{{ e.status }}" aria-valuemin="0" aria-valuemax="100"
                                              style="width: {{ e.status }}%">
-                                            <span class="sr-only">{{ e.status | floatformat }}% Complete (success)</span>
+                                            <span class="sr-only">{{ e.status | floatformat }}% Complete</span>
                                         </div>
                                     </div>
                                 </div>

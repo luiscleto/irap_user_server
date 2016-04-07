@@ -15,9 +15,12 @@ def index(request):
     return render(request, 'index.html')
 
 
-@login_required
-def profile(request):
-    return render(request, 'profile.html')
+def profile(request, username):
+    try:
+        u = User.objects.get(username__iexact=username)
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+    return render(request, 'profile.html', {'selected_user': u})
 
 
 def register(request):
@@ -29,7 +32,7 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            return HttpResponseRedirect('/accounts/profile/')
+            return HttpResponseRedirect('/accounts/profile/'+form.cleaned_data['username'])
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
@@ -38,14 +41,14 @@ def register(request):
 
 
 def experiments_index(request):
-    exps = Experiment.objects.only('author', 'status', 'title').order_by('-date_modified')
+    exps = Experiment.objects.only('author', 'status', 'title').order_by('-date_created')
     return render(request, 'experiments/list.html', {'experiments': exps})
 
 
 def user_experiments(request, username):
     try:
         User.objects.get(username__iexact=username)
-        exps = Experiment.objects.only('author', 'status', 'title').filter(author__iexact=username).order_by('-date_modified')
+        exps = Experiment.objects.only('author', 'status', 'title').filter(author__iexact=username).order_by('-date_created')
     except User.DoesNotExist:
         raise Http404("User does not exist")
     return render(request, 'experiments/list_by_user.html', {'username': username, 'experiments': exps})
@@ -81,3 +84,8 @@ def page_not_found_view(request):
 
 def not_yet_done(request):
     return render(request, 'todo.html', )
+
+
+@login_required
+def redirect_to_user_profile(request):
+    return HttpResponseRedirect('/accounts/profile/' + request.user.get_username())
