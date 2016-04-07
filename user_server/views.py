@@ -3,9 +3,9 @@ from django.contrib.auth.decorators import login_required
 
 from user_server.forms import *
 from django.shortcuts import render, render_to_response
-from django.contrib.auth import authenticate, login
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
+from django.core import serializers
 
 
 # Create your views here.
@@ -32,7 +32,7 @@ def register(request):
                 password=form.cleaned_data['password1'],
                 email=form.cleaned_data['email']
             )
-            return HttpResponseRedirect('/accounts/profile/'+form.cleaned_data['username'])
+            return HttpResponseRedirect('/accounts/profile/' + form.cleaned_data['username'])
     else:
         form = RegistrationForm()
     variables = RequestContext(request, {'form': form})
@@ -41,17 +41,31 @@ def register(request):
 
 
 def experiments_index(request):
-    exps = Experiment.objects.only('author', 'status', 'title').order_by('-date_created')
-    return render(request, 'experiments/list.html', {'experiments': exps})
+    experiments = Experiment.objects.only('author', 'status', 'title').order_by('-date_created')
+    return render(request, 'experiments/list.html', {'experiments': experiments})
 
 
 def user_experiments(request, username):
     try:
         User.objects.get(username__iexact=username)
-        exps = Experiment.objects.only('author', 'status', 'title').filter(author__iexact=username).order_by('-date_created')
+        experiments = Experiment.objects.only('author', 'status', 'title').filter(author__iexact=username).order_by(
+            '-date_created')
     except User.DoesNotExist:
         raise Http404("User does not exist")
-    return render(request, 'experiments/list_by_user.html', {'username': username, 'experiments': exps})
+    return render(request, 'experiments/list_by_user.html', {'username': username, 'experiments': experiments})
+
+
+def get_user_unfinished_experiments(request, username):
+    try:
+        User.objects.get(username__iexact=username)
+        experiments = Experiment.objects.only('author', 'status', 'title').filter(author__iexact=username,
+                                                                                  status__lt=100,
+                                                                                  status__gt=-0.5).order_by(
+            '-date_created')
+    except User.DoesNotExist:
+        raise Http404("User does not exist")
+    data = serializers.serialize('json', experiments)
+    return HttpResponse(data, mimetype='application/json')
 
 
 @login_required
@@ -64,7 +78,7 @@ def create_experiment(request):
                 title=form.cleaned_data['title'],
                 description=form.cleaned_data['description'],
             )
-            return HttpResponseRedirect('/experiments/'+exp.title)
+            return HttpResponseRedirect('/experiments/' + exp.title)
     else:
         form = ExperimentForm()
     return render(request, 'experiments/create.html', {'form': form})
