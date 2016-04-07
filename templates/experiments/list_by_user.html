@@ -19,10 +19,26 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <p>Hello, {{ user.get_username }}!</p>
-                    <p>One day, I might work on this page.</p>
-
-                    <p>For now, <a href="{% url 'home' %}">go to home</a>.</p>
+                    <div class="list-group">
+                        {% for e in experiments %}
+                            <a href="{% url 'experiment' e.title %}" class="list-group-item">
+                                <div>
+                                    <p>
+                                        <strong>{{ e.title }}</strong>
+                                        <span class="pull-right text-muted">{{ e.status | floatformat }}% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar {% if  e.status >= 100.0 %}progress-bar-success{% else %}progress-bar-primary{% endif %}"
+                                             role="progressbar"
+                                             aria-valuenow="{{ e.status }}" aria-valuemin="0" aria-valuemax="100"
+                                             style="width: {{ e.status }}%">
+                                            <span class="sr-only">{{ e.status | floatformat }}% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
                 <!-- /.panel-body -->
             </div>

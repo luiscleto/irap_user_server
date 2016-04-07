@@ -3,6 +3,8 @@ from user_server import views
 from django.views.generic import RedirectView
 
 
+handler404 = 'user_server.views.page_not_found_view'
+
 urlpatterns = [
     # Examples:
     # url(r'^$', 'irap_user_server.views.home', name='home'),
@@ -18,6 +20,7 @@ urlpatterns = [
 
     url(r'^experiments/list/$', views.experiments_index, name='experiments'),
     url(r'^experiments/create/$', views.create_experiment, name='new_experiment'),
+    url(r'^experiments/(?P<exp_title>\w+)/$', views.view_experiment, name='experiment'),
     url(r'^(?P<username>\w+)/experiments/$', views.user_experiments, name='user_experiments'),
 
     url(r'^notdone/$', views.not_yet_done, name='notdone'),
