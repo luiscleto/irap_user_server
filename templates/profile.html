@@ -23,6 +23,7 @@
                     <p>One day, I might work on this page.</p>
 
                     <p>For now, <a href="{% url 'home' %}">go to home</a>.</p>
+                    <p>Or, go see <a href="{% url 'user_experiments' selected_user.username %}">{{ selected_user.username }}'s experiments</a>.</p>
                 </div>
                 <!-- /.panel-body -->
             </div>
