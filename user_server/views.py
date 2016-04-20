@@ -120,12 +120,12 @@ def create_reference_genome(request):
 def view_reference_genome(request, species):
     try:
         s = Species.objects.get(name__iexact=species)
-        rg = ReferenceGenome.objects.get(species__exact=s)
+        rgs = ReferenceGenome.objects.only('version', 'date_created').filter(species__exact=s).order_by('-version')
     except Species.DoesNotExist:
         raise Http404("No reference genomes exist for that species")
     except Experiment.DoesNotExist:
         raise Http404("Experiment does not exist")
-    return render(request, 'ReferenceGenomes/view.html', {'reference_genome': rg, 'species': s})
+    return render(request, 'ReferenceGenomes/view.html', {'reference_genomes': rgs, 'species': s})
 
 
 def list_reference_genome(request):
