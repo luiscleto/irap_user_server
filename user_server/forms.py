@@ -37,3 +37,10 @@ class ExperimentForm(forms.Form):
 
     def clean_description(self):
         return self.cleaned_data['description']
+
+
+class ReferenceGenomeForm(forms.Form):
+    species = forms.RegexField(regex=r'^[a-zA-Z\s]+$', widget=forms.TextInput(attrs=dict(required=True, max_length=80, min_length=8)), label=_("Species"), error_messages={'invalid': _("This value must contain between 8 and 80 letters.")})
+
+    def clean_species(self):
+        return self.cleaned_data['species']

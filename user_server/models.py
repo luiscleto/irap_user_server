@@ -21,3 +21,18 @@ class Experiment(models.Model):
     status = models.FloatField(default=0)
     date_created = models.DateTimeField(default=datetime.now)
     date_modified = models.DateTimeField(default=datetime.now)
+
+
+class Species(models.Model):
+    name = models.CharField(max_length=80, unique=True, blank=False, validators=[
+        MinLengthValidator(8),
+        MaxLengthValidator(80)
+    ])
+    date_created = models.DateTimeField(default=datetime.now)
+
+
+class ReferenceGenome(models.Model):
+    species = models.ForeignKey(Species)
+    version = models.BigIntegerField(blank=False)
+    file_name = models.CharField(max_length=120, unique=True, blank=False)
+    date_created = models.DateTimeField(default=datetime.now)

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}New Reference Genome{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">New Reference Genome</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Reference Genome Information
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <form role="form" method="post" action=".">
+                        {% csrf_token %}
+                        <div class="form-group {% if form.species.errors %}has-error{% endif %}">
+                            <label for="rg_species" class="control-label">Species</label>
+                            <select id="rg_species" class="form-control" placeholder="Species name" name="species" required autofocus>
+                            <option value="">Species name</option>
+                                {% for s in species %}
+                                    <option value="{{ s.name }}">{{ s.name.capitalize }}</option>
+                                {% endfor %}
+                            </select>
+                            <script>
+                                $('#rg_species').selectize({
+                                    create: true,
+                                    sortField: {
+                                        field: 'text',
+                                        direction: 'asc'
+                                    },
+                                    dropdownParent: 'body'
+                                });
+                            </script>
+                            {% if form.species.errors %}
+                                <small style="color:#a94442">{{ form.species.errors }}</small>{% endif %}
+                        </div>
+                        <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit Reference Genome"/>
+                    </form>
+                    <div style="margin-top:5px">
+                        <a class="btn btn-lg btn-danger btn-block" href="{% url 'home' %}">Cancel</a>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- /.row -->
+
+{% endblock %}

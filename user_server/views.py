@@ -7,6 +7,8 @@ from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
 from django.core import serializers
 
+from utils import *
+
 
 # Create your views here.
 
@@ -90,6 +92,49 @@ def view_experiment(request, exp_title):
     except Experiment.DoesNotExist:
         raise Http404("Experiment does not exist")
     return render(request, 'experiments/view.html', {'experiment': e})
+
+
+@login_required
+def create_reference_genome(request):
+    if request.method == 'POST':
+        ss = ''
+        form = ReferenceGenomeForm(request.POST)
+        if form.is_valid():
+            s, created = Species.objects.get_or_create(name__iexact=form.cleaned_data['species'].lower())
+            if created:
+                s.name = form.cleaned_data['species'].lower()
+                s.save()
+            version_no = get_next_version_number(s)
+            rg = ReferenceGenome.objects.create(
+                species=s,
+                version=version_no,
+                file_name=s.name+"."+str(version_no)+".gtf.gz"
+            )
+            return HttpResponseRedirect('/reference-genomes/' + s.name)
+    else:
+        ss = Species.objects.all()
+        form = ReferenceGenomeForm()
+    return render(request, 'ReferenceGenomes/create.html', {'form': form, 'species': ss})
+
+
+def view_reference_genome(request, species):
+    try:
+        s = Species.objects.get(name__iexact=species)
+        rg = ReferenceGenome.objects.get(species__exact=s)
+    except Species.DoesNotExist:
+        raise Http404("No reference genomes exist for that species")
+    except Experiment.DoesNotExist:
+        raise Http404("Experiment does not exist")
+    return render(request, 'ReferenceGenomes/view.html', {'reference_genome': rg, 'species': s})
+
+
+def list_reference_genome(request):
+    try:
+        ss = Species.objects.all()
+        e = ReferenceGenome.objects.all()
+    except Experiment.DoesNotExist:
+        raise Http404("No reference genomes exist")
+    return render(request, 'ReferenceGenomes/list.html', {'reference_genomes': e, 'species': ss})
 
 
 def page_not_found_view(request):

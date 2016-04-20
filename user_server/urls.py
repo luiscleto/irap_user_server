@@ -25,5 +25,9 @@ urlpatterns = [
     url(r'^experiments/(?P<exp_title>\w+)/$', views.view_experiment, name='experiment'),
     url(r'^(?P<username>\w+)/experiments/$', views.user_experiments, name='user_experiments'),
 
+    url(r'^reference-genomes/list/$', views.list_reference_genome, name='reference_genomes'),
+    url(r'^reference-genomes/create/$', views.create_reference_genome, name='new_reference_genome'),
+    url(r'^reference-genomes/(?P<species>[\w\ ]+)/$', views.view_reference_genome, name='reference_genome'),
+
     url(r'^notdone/$', views.not_yet_done, name='notdone'),
 ]
