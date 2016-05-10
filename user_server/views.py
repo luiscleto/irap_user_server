@@ -131,10 +131,18 @@ def view_reference_genome(request, species):
 def list_reference_genome(request):
     try:
         ss = Species.objects.all()
-        e = ReferenceGenome.objects.all()
+        ss = [append_latest_version_to_species(s) for s in ss]
     except Experiment.DoesNotExist:
         raise Http404("No reference genomes exist")
-    return render(request, 'ReferenceGenomes/list.html', {'reference_genomes': e, 'species': ss})
+    return render(request, 'ReferenceGenomes/list.html', {'species': ss})
+
+
+def append_latest_version_to_species(species):
+    rg = ReferenceGenome.objects.only('version', 'date_created').filter(species__exact=species).order_by('-version').last()
+    s = species
+    s['latest_version'] = str(rg.version)
+    s['modified_on'] = rg.date_created
+    return s
 
 
 def page_not_found_view(request):
