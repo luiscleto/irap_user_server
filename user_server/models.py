@@ -2,9 +2,21 @@ from django.contrib.auth.models import User
 from django.core.validators import *
 from django.utils.datetime_safe import datetime
 from django.db import models
-from djangotoolbox.fields import BlobField
 
 # Create your models here.
+from user_server import gridfs_storage
+
+
+class RefGenome(models.Model):
+    file_address = models.URLField(unique=True, blank=False)
+    file_content = models.FileField(storage=gridfs_storage, upload_to='/')
+    date_created = models.DateTimeField(default=datetime.now)
+
+
+class GTFFile(models.Model):
+    file_address = models.URLField(unique=True, blank=False)
+    file_content = models.FileField(storage=gridfs_storage, upload_to='/')
+    date_created = models.DateTimeField(default=datetime.now)
 
 
 class Experiment(models.Model):
@@ -19,6 +31,10 @@ class Experiment(models.Model):
         ],)
     description = models.CharField(max_length=1500, blank=False)
     status = models.FloatField(default=0)
+    conf_file = models.FileField(storage=gridfs_storage, upload_to='/')
+    libraries_file = models.FileField(storage=gridfs_storage, upload_to='/')  # compressed file with all libraries
+    reference_genome = models.ForeignKey(RefGenome)
+    gtf_file = models.ForeignKey(GTFFile)
     date_created = models.DateTimeField(default=datetime.now)
     date_modified = models.DateTimeField(default=datetime.now)
 

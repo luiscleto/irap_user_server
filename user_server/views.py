@@ -73,7 +73,7 @@ def get_user_unfinished_experiments(request, username):
 @login_required
 def create_experiment(request):
     if request.method == 'POST':
-        form = ExperimentForm(request.POST)
+        form = ExperimentForm(request.POST, request.FILES)
         if form.is_valid():
             exp = Experiment.objects.create(
                 author=request.user.get_username(),
