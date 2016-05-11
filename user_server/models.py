@@ -31,6 +31,7 @@ class Experiment(models.Model):
         ],)
     description = models.CharField(max_length=1500, blank=False)
     status = models.FloatField(default=5)
+    fail_message = models.CharField(default='', max_length=2024)
     conf_file = models.FileField(storage=gridfs_storage, upload_to='/')
     libraries_file = models.FileField(storage=gridfs_storage, upload_to='/')  # compressed file with all libraries
     reference_genome = models.ForeignKey(RefGenome)

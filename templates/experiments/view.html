@@ -43,15 +43,28 @@
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label>Progress</label>
-                                    <div class="progress {% if  experiment.status < 100.0 %}progress-striped active{% endif %}">
-                                        <div class="progress-bar {% if  experiment.status >= 100.0 %}progress-bar-success{% else %}progress-bar-primary{% endif %}"
-                                             role="progressbar"
-                                             aria-valuenow="{{ experiment.status }}" aria-valuemin="0"
-                                             aria-valuemax="100"
-                                             style="width: {{ experiment.status }}%">
-                                            <span>{{ experiment.status | floatformat }}% Complete</span>
+                                    {% if experiment.status > 0.0 %}
+                                        <div class="progress {% if  experiment.status < 100.0 %}progress-striped active{% endif %}">
+                                            <div class="progress-bar {% if  experiment.status >= 100.0 %}progress-bar-success{% else %}progress-bar-primary{% endif %}"
+                                                 role="progressbar"
+                                                 aria-valuenow="{{ experiment.status }}" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 style="width: {{ experiment.status }}%">
+                                                <span>{{ experiment.status | floatformat }}% Complete</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% else %}
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-danger"
+                                                 role="progressbar"
+                                                 aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 style="width: 100%">
+                                                <span>Error: {{ experiment.fail_message }}</span>
+                                            </div>
+                                        {{ experiment.fail_message }}
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -63,7 +76,8 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <span class="form-control-static"><a
-                                                href="{% url 'get_file' experiment.libraries_file_url %}" target="_blank">Libraries</a></span>
+                                                href="{% url 'get_file' experiment.libraries_file_url %}"
+                                                target="_blank">Libraries</a></span>
                                     </div>
                                 </div>
                             </div>
