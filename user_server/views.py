@@ -92,6 +92,7 @@ def create_experiment(request):
             exp = Experiment.objects.create(
                 author=request.user.get_username(),
                 title=form.cleaned_data['title'],
+                species=form.cleaned_data['species'],
                 description=form.cleaned_data['description'],
                 conf_file=form.cleaned_data['conf_file'],
                 libraries_file=form.cleaned_data['libraries_file'],

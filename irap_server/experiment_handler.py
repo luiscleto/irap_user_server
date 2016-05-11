@@ -2,7 +2,7 @@ import urllib2
 import tempfile
 
 from django.core import files
-
+from irap_user_server.local_settings import EXPERIMENTS_DIR
 from user_server.models import RefGenome, GTFFile
 
 
@@ -64,6 +64,8 @@ def start_exp(exp):
     if not check_files(exp):
         print("Failed " + exp.title)
         return
+    exp.status = 7.0
+    exp.save()
     if not configure_exp(exp):
         print("Failed " + exp.title)
         return

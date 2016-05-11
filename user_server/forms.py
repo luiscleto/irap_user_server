@@ -27,6 +27,7 @@ class RegistrationForm(forms.Form):
 class ExperimentForm(forms.Form):
     title = forms.RegexField(regex=r'^\w+$', widget=forms.TextInput(attrs=dict(required=True, max_length=60)), label=_("Title"), error_messages={ 'invalid': _("This value must contain only up to 60 letters, numbers and underscores.") })
     description = forms.CharField(max_length=1500, widget=forms.Textarea)
+    species = forms.CharField(max_length=256, min_length=3, widget=forms.Textarea)
     conf_file = forms.FileField(required=True)
     libraries_file = forms.FileField(required=True)
     gtf_file = forms.URLField(required=True)

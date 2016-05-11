@@ -29,6 +29,10 @@ class Experiment(models.Model):
             MinLengthValidator(4),
             MaxLengthValidator(60),
         ],)
+    species = models.CharField(max_length=256, blank=False, validators=[
+        MinLengthValidator(3),
+        MaxLengthValidator(256),
+    ], )
     description = models.CharField(max_length=1500, blank=False)
     status = models.FloatField(default=5)
     fail_message = models.CharField(default='', max_length=2024)
