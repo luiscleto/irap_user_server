@@ -1,3 +1,4 @@
+import os
 import urllib2
 import tempfile
 
@@ -67,9 +68,22 @@ def set_config_file(exp):
             f.write(buf)
 
 
+def create_directories(exp):
+    if not os.path.exists(IRAP_DIR + '/data/reference/' + exp.species):
+        os.makedirs(IRAP_DIR + '/data/reference/' + exp.species)
+    if not os.path.exists(IRAP_DIR + '/data/raw_data/' + exp.species):
+        os.makedirs(IRAP_DIR + '/data/raw_data/' + exp.species)
+
+
+def copy_files(exp):
+    print("ToDo")  # TODO
+
+
 def configure_exp(exp):
     print("to be done one day")
     set_config_file(exp)
+    create_directories(exp)
+    copy_files(exp)
     return True
 
 
