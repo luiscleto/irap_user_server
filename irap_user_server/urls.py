@@ -8,6 +8,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^', include('user_server.urls')),
+    url(r'^irap/', include('irap_server.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^mongonaut/', include('mongonaut.urls'))
 ]

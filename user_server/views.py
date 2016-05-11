@@ -98,6 +98,7 @@ def create_experiment(request):
                 reference_genome=ref_g,
                 gtf_file=gtf_f
             )
+            start_experiment(exp)
             return HttpResponseRedirect('/experiments/' + exp.title)
     else:
         form = ExperimentForm()
