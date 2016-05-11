@@ -14,6 +14,7 @@ def get_next_version_number(species):
 
 def start_experiment(exp):
     r = requests.get(IRAP_SERVER_ADDRESS + '/irap/run/' + exp.title)
+    print(r.text)
     if r.status_code == 404:
         exp.status = -1.0
         exp.fail_message = "Experiment not found by cluster server"
