@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^reference-genomes/(?P<species>[\w\ ]+)/$', views.view_reference_genome, name='reference_genome'),
 
     url(r'^notdone/$', views.not_yet_done, name='notdone'),
+
+    url(r'^getgridfile/(?P<path>.*)$', views.serve_from_gridfs, name='get_file')
 ]

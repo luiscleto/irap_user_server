@@ -30,7 +30,7 @@ class Experiment(models.Model):
             MaxLengthValidator(60),
         ],)
     description = models.CharField(max_length=1500, blank=False)
-    status = models.FloatField(default=0)
+    status = models.FloatField(default=5)
     conf_file = models.FileField(storage=gridfs_storage, upload_to='/')
     libraries_file = models.FileField(storage=gridfs_storage, upload_to='/')  # compressed file with all libraries
     reference_genome = models.ForeignKey(RefGenome)

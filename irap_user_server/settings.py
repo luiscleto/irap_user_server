@@ -130,4 +130,5 @@ EMAIL_USE_TLS = True
 
 # in local settings declare EMAIL_HOST_USER = 'user@gmail.com' and EMAIL_HOST_PASSWORD = 'yourpassword'
 # this was done to avoid adding private information to version control
+# also declare FRONT_END_SERVER_ADDRESS and IRAP_SERVER_ADDRESS
 from local_settings import *

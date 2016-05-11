@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
+from django.forms.util import ErrorList
 
 from user_server.forms import *
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.template import RequestContext
 from django.core import serializers
+from gridfs.errors import NoFile
+from mimetypes import guess_type
+from django.utils.http import urlquote_plus
 
 from utils import *
 
@@ -75,10 +79,24 @@ def create_experiment(request):
     if request.method == 'POST':
         form = ExperimentForm(request.POST, request.FILES)
         if form.is_valid():
+            ref_g, created1 = RefGenome.objects.get_or_create(file_address__iexact=form.cleaned_data['reference_genome'])
+            if created1:
+                ref_g.file_address = form.cleaned_data['reference_genome']
+                ref_g.save()
+            gtf_f, created2 = GTFFile.objects.get_or_create(file_address__iexact=form.cleaned_data['gtf_file'])
+            if created2:
+                gtf_f.file_address = form.cleaned_data['gtf_file']
+                gtf_f.save()
+            if not (ref_g and gtf_f):
+                return render(request, 'experiments/create.html', {'form': form})
             exp = Experiment.objects.create(
                 author=request.user.get_username(),
                 title=form.cleaned_data['title'],
                 description=form.cleaned_data['description'],
+                conf_file=form.cleaned_data['conf_file'],
+                libraries_file=form.cleaned_data['libraries_file'],
+                reference_genome=ref_g,
+                gtf_file=gtf_f
             )
             return HttpResponseRedirect('/experiments/' + exp.title)
     else:
@@ -89,6 +107,8 @@ def create_experiment(request):
 def view_experiment(request, exp_title):
     try:
         e = Experiment.objects.get(title__iexact=exp_title)
+        e.conf_file_url = urlquote_plus(str(e.conf_file)[1:])
+        e.libraries_file_url = urlquote_plus(str(e.libraries_file)[1:])
     except Experiment.DoesNotExist:
         raise Http404("Experiment does not exist")
     return render(request, 'experiments/view.html', {'experiment': e})
@@ -156,3 +176,21 @@ def not_yet_done(request):
 @login_required
 def redirect_to_user_profile(request):
     return HttpResponseRedirect('/accounts/profile/' + request.user.get_username())
+
+
+from django.conf import settings
+
+
+# note: files should NEVER be served this way in production. This was done during development for rapid testing
+# TODO: PLEASE use nginx-gridfs to serve large files before moving this to production
+if settings.DEBUG:
+    def serve_from_gridfs(request, path):
+        # Serving GridFS files through Django is inefficient and
+        # insecure. NEVER USE IN PRODUCTION!
+        try:
+            grid_file = gridfs_storage.open(path)
+        except NoFile:
+            raise Http404
+        else:
+            return HttpResponse(grid_file, mimetype=guess_type(path)[0])
+

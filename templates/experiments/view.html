@@ -39,10 +39,10 @@
                             <label>Description</label>
                             <p class="form-control-static">{{ experiment.description }}</p>
                         </div>
-                        <div class="form-group">
-                            <label>Progress</label>
-                            <div class="row">
-                                <div class="col-lg-4">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label>Progress</label>
                                     <div class="progress {% if  experiment.status < 100.0 %}progress-striped active{% endif %}">
                                         <div class="progress-bar {% if  experiment.status >= 100.0 %}progress-bar-success{% else %}progress-bar-primary{% endif %}"
                                              role="progressbar"
@@ -51,6 +51,19 @@
                                              style="width: {{ experiment.status }}%">
                                             <span>{{ experiment.status | floatformat }}% Complete</span>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-8">
+                                <label>Experiment Files</label>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <span class="form-control-static"><a
+                                                href="{% url 'get_file' experiment.conf_file_url %}" target="_blank">Configuration File</a></span>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <span class="form-control-static"><a
+                                                href="{% url 'get_file' experiment.libraries_file_url %}" target="_blank">Libraries</a></span>
                                     </div>
                                 </div>
                             </div>

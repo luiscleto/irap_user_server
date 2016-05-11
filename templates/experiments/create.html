@@ -37,6 +37,21 @@
                             <input id="conf_file" class="form-control" name="conf_file" type="file" required/>
                             {% if form.conf_file.errors %}<small style="color:#a94442">{{ form.conf_file.errors }}</small>{% endif %}
                         </div>
+                        <div class="form-group {% if form.libraries_file.errors %}has-error{% endif %}">
+                            <label for="libraries_file" class="control-label">Libraries Compressed Archive</label>
+                            <input id="libraries_file" class="form-control" name="libraries_file" type="file" required/>
+                            {% if form.libraries_file.errors %}<small style="color:#a94442">{{ form.libraries_file.errors }}</small>{% endif %}
+                        </div>
+                        <div class="form-group {% if form.reference_genome.errors %}has-error{% endif %}">
+                            <label for="reference_genome" class="control-label">Reference Genome File URL</label>
+                            <input id="reference_genome" class="form-control" placeholder="e.g.: http://someurl/file.fa.gz" name="reference_genome" required type="url" autofocus>
+                            {% if form.reference_genome.errors %}<small style="color:#a94442">{{ form.reference_genome.errors }}</small>{% endif %}
+                        </div>
+                        <div class="form-group {% if form.gtf_file.errors %}has-error{% endif %}">
+                            <label for="gtf_file" class="control-label">GTF File URL</label>
+                            <input id="gtf_file" class="form-control" placeholder="e.g.: http://someurl/file.gtf.gz" name="gtf_file" required type="url" autofocus>
+                            {% if form.gtf_file.errors %}<small style="color:#a94442">{{ form.gtf_file.errors }}</small>{% endif %}
+                        </div>
                         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Create Experiment"/>
                     </form>
                     <div style="margin-top:5px">
