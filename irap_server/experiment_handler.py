@@ -2,7 +2,10 @@ import urllib2
 import tempfile
 
 from django.core import files
-from irap_user_server.local_settings import EXPERIMENTS_DIR
+from django.utils.http import urlquote_plus
+
+from irap_server import gridfs_storage
+from irap_user_server.local_settings import IRAP_DIR
 from user_server.models import RefGenome, GTFFile
 
 
@@ -54,8 +57,19 @@ def check_files(exp):
     return True
 
 
+def set_config_file(exp):
+    grid_file = gridfs_storage.open(urlquote_plus(str(exp.conf_file)[1:]))
+    with open(IRAP_DIR + "/" + exp.title + ".conf", 'wb') as f:
+        while True:
+            buf = grid_file.read(16 * 1024)
+            if not buf:
+                break
+            f.write(buf)
+
+
 def configure_exp(exp):
     print("to be done one day")
+    set_config_file(exp)
     return True
 
 
