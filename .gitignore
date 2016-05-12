@@ -71,3 +71,4 @@ target/
 
 #sensitive information
 irap_user_server/local_settings.py
+irap.exe
