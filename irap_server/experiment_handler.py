@@ -1,4 +1,5 @@
 import os
+import subprocess
 import urllib2
 import tempfile
 from zipfile import ZipFile
@@ -8,7 +9,7 @@ from django.utils.http import urlquote_plus
 
 from irap_server import gridfs_storage
 from irap_server.utils import copy_grid_file
-from irap_user_server.local_settings import IRAP_DIR
+from irap_user_server.local_settings import IRAP_DIR, MAX_NUMBER_OF_PROCESSES
 from user_server.models import RefGenome, GTFFile
 
 
@@ -101,6 +102,24 @@ def configure_exp(exp):
 
 
 def run_analysis(exp):
+    print("Starting analysis")
+    outfile_name = exp.title + ".out.log"
+    errfile_name = exp.title + ".err.log"
+    with open(errfile_name, "w") as errfile:
+        with open(outfile_name, "w") as outfile:
+            result = subprocess.check_call(["irap",
+                                            "conf=" + exp.title + ".conf",
+                                            "mapper=tophat1",
+                                            "de_method=deseq",
+                                            "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
+                                           stdout=outfile, stderr=errfile)
+            if result:
+                exp.status = -1.0
+                exp.fail_message = "IRAP failed to execute properly"
+                # TODO append logs to experiment in database
+                exp.save()
+                return False
+    print("Analysis finished")
     return True
 
 
