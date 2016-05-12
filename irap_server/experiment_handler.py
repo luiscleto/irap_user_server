@@ -103,8 +103,8 @@ def configure_exp(exp):
 
 def run_analysis(exp):
     print("Starting analysis")
-    outfile_name = exp.title + ".out.log"
-    errfile_name = exp.title + ".err.log"
+    outfile_name = IRAP_DIR + "/" + exp.title + ".out.log"
+    errfile_name = IRAP_DIR + "/" + exp.title + ".err.log"
     with open(errfile_name, "w") as errfile:
         with open(outfile_name, "w") as outfile:
             result = subprocess.check_call(["irap",
