@@ -14,4 +14,5 @@ def zipdir(path, ziph):
     # ziph is zipfile handle
     for root, dirs, files in os.walk(path):
         for f in files:
-            ziph.write(os.path.join(root, f))
+            fp = os.path.join(root, f)
+            ziph.write(fp, os.path.relpath(fp, path))
