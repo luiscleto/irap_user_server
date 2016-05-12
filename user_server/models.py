@@ -42,6 +42,9 @@ class Experiment(models.Model):
     gtf_file = models.ForeignKey(GTFFile)
     date_created = models.DateTimeField(default=datetime.now)
     date_modified = models.DateTimeField(default=datetime.now)
+    out_log = models.FileField(storage=gridfs_storage, upload_to='/')
+    err_log = models.FileField(storage=gridfs_storage, upload_to='/')
+    results_archive = models.FileField(storage=gridfs_storage, upload_to='/')
 
 
 class Species(models.Model):

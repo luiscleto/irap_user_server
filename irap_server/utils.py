@@ -1,3 +1,6 @@
+import os
+
+
 def copy_grid_file(grid_file, new_file_path):
     with open(new_file_path, 'wb') as f:
         while True:
@@ -5,3 +8,10 @@ def copy_grid_file(grid_file, new_file_path):
             if not buf:
                 break
             f.write(buf)
+
+
+def zipdir(path, ziph):
+    # ziph is zipfile handle
+    for root, dirs, files in os.walk(path):
+        for f in files:
+            ziph.write(os.path.join(root, f))

@@ -111,6 +111,9 @@ def view_experiment(request, exp_title):
         e = Experiment.objects.get(title__iexact=exp_title)
         e.conf_file_url = urlquote_plus(str(e.conf_file)[1:])
         e.libraries_file_url = urlquote_plus(str(e.libraries_file)[1:])
+        e.out_log_url = urlquote_plus(str(e.out_log)[1:])
+        e.err_log_url = urlquote_plus(str(e.err_log)[1:])
+        e.results_url = urlquote_plus(str(e.results_archive)[1:])
     except Experiment.DoesNotExist:
         raise Http404("Experiment does not exist")
     return render(request, 'experiments/view.html', {'experiment': e})

@@ -88,6 +88,34 @@
                                 </div>
                             </div>
                         </div>
+                        {% if experiment.status < 0 or experiment.status >= 100.0 %}
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label>Results</label>
+                                {% if experiment.out_log_url %}
+                                <div class="col-lg-4">
+                                    <span class="form-control-static">
+                                        <a href="{% url 'get_file' experiment.out_log_url %}" target="_blank">Execution Log</a>
+                                    </span>
+                                </div>
+                                {% endif %}
+                                {% if experiment.err_log_url %}
+                                <div class="col-lg-4">
+                                    <span class="form-control-static">
+                                        <a href="{% url 'get_file' experiment.err_log_url %}" target="_blank">Error Log</a>
+                                    </span>
+                                </div>
+                                {% endif %}
+                                {% if experiment.results_url %}
+                                <div class="col-lg-4">
+                                    <span class="form-control-static">
+                                        <a href="{% url 'get_file' experiment.results_url %}" target="_blank">Results</a>
+                                    </span>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endif %}
                     </form>
                 </div>
                 <!-- /.panel-body -->
