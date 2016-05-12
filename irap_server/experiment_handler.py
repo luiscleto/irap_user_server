@@ -89,7 +89,7 @@ def prepare_files(exp):
     if not os.path.exists(libraries_name):
         grid_file = gridfs_storage.open(urlquote_plus(str(exp.libraries_file)[1:]))
         copy_grid_file(grid_file, libraries_name)
-        # TODO replace this with system call to a proper library capable of handling any compression types
+        # TODO replace this with system call to a proper library capable of handling any compression type
         zip_ref = ZipFile(libraries_name)
         zip_ref.extractall(IRAP_DIR + '/data/raw_data/' + exp.species)
         zip_ref.close()
