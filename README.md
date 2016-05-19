@@ -2,6 +2,11 @@
 Simple Django server for interacting with backend running the iRAP pipeline
 
 # installation notes
+Django must be installed from django-nonrel (using the command):
+
+```pip install git+https://github.com/django-nonrel/django@nonrel-1.6```
+
+
 Running the server requires creating a 'local_settings.py' file in the 'irap_user_server' directory which declares ``EMAIL_HOST_USER = 'user@gmail.com'`` and ``EMAIL_HOST_PASSWORD = 'yourpassword'``
 
 This was done to avoid adding sensitive information to version control.
