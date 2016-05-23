@@ -149,13 +149,16 @@ def run_analysis(exp):
             outfile.write("=====================================================================\n" +
                           "========================= STARTING ANALYSIS =========================\n" +
                           "=====================================================================\n\n")
-            result = subprocess.check_call(["irap",
-                                            "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
-                                            "mapper=tophat1",
-                                            "de_method=deseq",
-                                            "data_dir=" + IRAP_DIR + "/data",
-                                            "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
-                                           stdout=outfile, stderr=errfile)
+            try:
+                result = subprocess.check_call(["irap",
+                                                "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
+                                                "mapper=tophat1",
+                                                "de_method=deseq",
+                                                "data_dir=" + IRAP_DIR + "/data",
+                                                "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
+                                               stdout=outfile, stderr=errfile)
+            except:
+                result = 1
             if result:
                 exp.status = -1.0
                 exp.fail_message = "IRAP failed to execute properly"
@@ -178,14 +181,17 @@ def generate_report(exp):
             outfile.write("=====================================================================\n" +
                           "========================= GENERATING REPORT =========================\n" +
                           "=====================================================================\n\n")
-            result = subprocess.check_call(["irap",
-                                            "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
-                                            "mapper=tophat1",
-                                            "de_method=deseq",
-                                            "data_dir=" + IRAP_DIR + "/data",
-                                            "max_threads=" + str(MAX_NUMBER_OF_PROCESSES),
-                                            "report"],
-                                           stdout=outfile, stderr=errfile)
+            try:
+                result = subprocess.check_call(["irap",
+                                                "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
+                                                "mapper=tophat1",
+                                                "de_method=deseq",
+                                                "data_dir=" + IRAP_DIR + "/data",
+                                                "max_threads=" + str(MAX_NUMBER_OF_PROCESSES),
+                                                "report"],
+                                               stdout=outfile, stderr=errfile)
+            except:
+                result = 1
             if result:
                 exp.status = -1.0
                 exp.fail_message = "IRAP failed to generate report"
