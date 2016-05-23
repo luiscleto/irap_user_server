@@ -151,7 +151,7 @@ def generate_report(exp):
                           "========================= GENERATING REPORT =========================\n" +
                           "=====================================================================\n\n")
             result = subprocess.check_call(["irap",
-                                            "conf=" + exp.title + ".conf",
+                                            "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
                                             "mapper=tophat1",
                                             "de_method=deseq",
                                             "data_dir=" + IRAP_DIR + "/" + exp.title,
