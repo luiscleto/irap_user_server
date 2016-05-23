@@ -154,6 +154,7 @@ def generate_report(exp):
                                             "conf=" + exp.title + ".conf",
                                             "mapper=tophat1",
                                             "de_method=deseq",
+                                            "data_dir=" + IRAP_DIR + "/" + exp.title,
                                             "max_threads=" + str(MAX_NUMBER_OF_PROCESSES),
                                             "report"],
                                            stdout=outfile, stderr=errfile)
