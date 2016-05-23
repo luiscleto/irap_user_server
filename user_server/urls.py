@@ -31,5 +31,6 @@ urlpatterns = [
 
     url(r'^notdone/$', views.not_yet_done, name='notdone'),
 
-    url(r'^getgridfile/(?P<path>.*)$', views.serve_from_gridfs, name='get_file')
+    url(r'^getgridfile/(?P<path>.*)$', views.serve_from_gridfs, name='get_file'),
+    url(r'^storegridfile/$', views.serve_to_gridfs, name='put_file')
 ]

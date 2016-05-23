@@ -64,3 +64,12 @@ class GTFFileForm(forms.Form):
     def clean_file_address(self):
         return self.cleaned_data['file_address']
 
+
+class UploadFileToFrontServerForm(forms.Form):
+    file = forms.FileField(required=True)
+    model = forms.CharField(max_length=256, min_length=3, widget=forms.Textarea)
+    field = forms.CharField(max_length=256, min_length=3, widget=forms.Textarea)
+    name = forms.CharField(max_length=256, min_length=0, widget=forms.Textarea)
+    address = forms.URLField()
+
+

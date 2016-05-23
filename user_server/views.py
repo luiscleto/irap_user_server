@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
 from django.forms.util import ErrorList
+from django.views.decorators.csrf import csrf_exempt
 
 from user_server.forms import *
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, Http404, HttpResponseBadRequest, HttpResponse
 from django.template import RequestContext
 from django.core import serializers
 from gridfs.errors import NoFile
@@ -12,7 +13,8 @@ from mimetypes import guess_type
 from django.utils.http import urlquote_plus
 
 from utils import *
-
+from bson.objectid import ObjectId
+import pymongo
 
 # Create your views here.
 
@@ -185,6 +187,37 @@ def redirect_to_user_profile(request):
 
 from django.conf import settings
 
+
+@csrf_exempt
+def serve_to_gridfs(request):
+    if request.method == 'POST':
+        form = UploadFileToFrontServerForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                if form.cleaned_data['model'] == 'gtffile':
+                    obj = GTFFile.objects.get(file_address__iexact=form.cleaned_data['address'])
+                    obj.file_content = form.cleaned_data['file']
+                    obj.save()
+                elif form.cleaned_data['model'] == 'referencegenome':
+                    obj = RefGenome.objects.get(file_address__iexact=form.cleaned_data['address'])
+                    obj.file_content = form.cleaned_data['file']
+                    obj.save()
+                elif form.cleaned_data['model'] == 'experiment':
+                    obj = Experiment.objects.get(title__iexact=form.cleaned_data['name'])
+                    if form.cleaned_data['field'] == 'err_log':
+                        obj.err_log = form.cleaned_data['file']
+                    elif form.cleaned_data['field'] == 'out_log':
+                        obj.out_log = form.cleaned_data['file']
+                    elif form.cleaned_data['field'] == 'results_archive':
+                        obj.results_archive = form.cleaned_data['file']
+                    obj.save()
+                else:
+                    raise Http404("Model not found: " + form.cleaned_data['id'])
+            except:
+                raise Http404("Model not found: " + form.cleaned_data['id'])
+            return HttpResponse('File Uploaded')
+        return HttpResponse(content="Invalid Request", status=400)
+    return HttpResponse(content="Only POST requests are supported", status=400)
 
 # note: files should NEVER be served this way in production. This was done during development for rapid testing
 # TODO: PLEASE use nginx-gridfs to serve large files before moving this to production
