@@ -123,9 +123,10 @@ def run_analysis(exp):
                           "========================= STARTING ANALYSIS =========================\n" +
                           "=====================================================================\n\n")
             result = subprocess.check_call(["irap",
-                                            "conf=" + exp.title + ".conf",
+                                            "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
                                             "mapper=tophat1",
                                             "de_method=deseq",
+                                            "data_dir=" + IRAP_DIR + "/" + exp.title,
                                             "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
                                            stdout=outfile, stderr=errfile)
             if result:
