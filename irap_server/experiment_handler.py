@@ -156,7 +156,7 @@ def run_analysis(exp):
                                                 "de_method=deseq",
                                                 "data_dir=" + IRAP_DIR + "/data",
                                                 "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
-                                               stdout=outfile, stderr=errfile)
+                                               stdout=outfile, stderr=errfile, cwd=IRAP_DIR)
             except:
                 result = 1
             if result:
@@ -189,7 +189,7 @@ def generate_report(exp):
                                                 "data_dir=" + IRAP_DIR + "/data",
                                                 "max_threads=" + str(MAX_NUMBER_OF_PROCESSES),
                                                 "report"],
-                                               stdout=outfile, stderr=errfile)
+                                               stdout=outfile, stderr=errfile, cwd=IRAP_DIR)
             except:
                 result = 1
             if result:
