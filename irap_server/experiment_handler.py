@@ -126,7 +126,7 @@ def run_analysis(exp):
                                             "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
                                             "mapper=tophat1",
                                             "de_method=deseq",
-                                            "data_dir=" + IRAP_DIR + "/" + exp.title,
+                                            "data_dir=" + IRAP_DIR + "/data",
                                             "max_threads=" + str(MAX_NUMBER_OF_PROCESSES)],
                                            stdout=outfile, stderr=errfile)
             if result:
@@ -155,7 +155,7 @@ def generate_report(exp):
                                             "conf=" + IRAP_DIR + "/" + exp.title + ".conf",
                                             "mapper=tophat1",
                                             "de_method=deseq",
-                                            "data_dir=" + IRAP_DIR + "/" + exp.title,
+                                            "data_dir=" + IRAP_DIR + "/data",
                                             "max_threads=" + str(MAX_NUMBER_OF_PROCESSES),
                                             "report"],
                                            stdout=outfile, stderr=errfile)
