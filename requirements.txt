@@ -2,7 +2,7 @@ Django==1.6.11  # MUST be installed from 'pip install git+https://github.com/dja
 Jinja2==2.8
 MarkupSafe==0.23
 Paver==1.2.1
-PyYAML==3.11
+PyYAML==5.1
 Pygments==2.0.2
 amqp==1.4.9
 anyjson==0.3.3
