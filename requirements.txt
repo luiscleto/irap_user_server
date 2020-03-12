@@ -41,7 +41,7 @@ path.py==3.0.1
 pathtools==0.1.2
 pickleshare==0.5
 poster==0.8.1
-psutil==1.2.1
+psutil==5.6.6
 pymongo==3.2.2
 python-memcached==1.54
 pytz==2016.4
