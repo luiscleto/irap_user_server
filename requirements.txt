@@ -1,5 +1,5 @@
 Django==1.6.11  # MUST be installed from 'pip install git+https://github.com/django-nonrel/django@nonrel-1.6'
-Jinja2==2.8
+Jinja2==2.11.3
 MarkupSafe==0.23
 Paver==1.2.1
 PyYAML==3.11
