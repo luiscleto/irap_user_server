@@ -34,7 +34,7 @@ lazy==1.1
 lxml==3.4.4
 mistune==0.7.1
 mongoengine==0.10.6
-nbconvert==4.1.0
+nbconvert==6.5.1
 nbformat==4.0.1
 notebook==4.0.6
 path.py==3.0.1
